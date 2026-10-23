@@ -2,10 +2,11 @@ package com.pluralsight;
 import java.util.Scanner;
 
 
-
 public class NeighborhoodLibrary {
     private static final Scanner myScanner = new Scanner(System.in);
 
+
+    // Library books are a currently a class level variable since they go on a bunch of methods and I think it's better than to be constantly passing them as arguments.
     static Book[] libraryBooks = {
             new Book(1325, "978-0141036144", "1984", true, "Potato Sensei"),
             new Book(2048, "978-0061120084", "To Kill a Mockingbird", false, ""),
@@ -30,16 +31,15 @@ public class NeighborhoodLibrary {
     };
 
 
+
+    // In case it isn't obvious I like to keep my main classes tidy lol
     public static void main(String[] args) {
-
-
         System.out.println("Welcome to the neighborhood library!");
         homeScreen();
-        
-        //libraryBooks[3].checkedOut("Fab");
-        //libraryBooks[3].checkIn();
     }
 
+
+    // Main menu, made it a method so it can be called from any other menus
     public static void homeScreen(){
         System.out.println("\nWhat would you like to do?");
         System.out.println("1: Show available books.");
@@ -64,6 +64,7 @@ public class NeighborhoodLibrary {
     }
 
 
+    // Since the list is pretty long, I split it and it's respective menu apart so that this long list is not constantly getting printed
     public static void showAvailableBooks(){
         System.out.println("\nBooks available for check out: \n");
         for (Book book : libraryBooks) {
@@ -77,6 +78,8 @@ public class NeighborhoodLibrary {
         availableBooksMenu();
     }
 
+
+    // Menu that goes under the available books list, it also gets called by itself in case of invalid inputs.
     public static void availableBooksMenu() {
         System.out.println("What would you like to do?");
         System.out.println("1: Check out a book.");
@@ -101,9 +104,18 @@ public class NeighborhoodLibrary {
         }
     }
 
+
+    // Book check out method, it uses the checkedOut method defined within Book.java
     public static void checkOutBook(){
         System.out.println("\nPlease write the ID of the book you'd like to check out: ");
         while (true) {
+            if (!myScanner.hasNextInt()) {
+                myScanner.nextLine(); // remove the bad input
+                System.out.println("Book ID not found.\n");
+                availableBooksMenu();
+                return;
+            }
+
             int wantedBookID = myScanner.nextInt();
             for (Book book : libraryBooks){
                 if (!book.getIsCheckedOut() && wantedBookID == book.getId()){
@@ -113,7 +125,7 @@ public class NeighborhoodLibrary {
                     String userName = myScanner.nextLine();
                     book.checkedOut(userName);
                     homeScreen();
-                    break;
+                    return;
                 }
             }
 
@@ -123,6 +135,8 @@ public class NeighborhoodLibrary {
         }
     }
 
+
+    // All the checked out Book lists and menus work the same way as the available in ones only with slight variations, there's probably some code repetition that could be improved
     public static void showCheckedOutBooks(){
         System.out.println("\nBooks currently checked out: \n");
         for (Book book : libraryBooks) {
@@ -135,6 +149,7 @@ public class NeighborhoodLibrary {
         }
         checkedOutBooksMenu();
     }
+
 
     public static void checkedOutBooksMenu() {
         System.out.println("What would you like to do?");
@@ -160,9 +175,17 @@ public class NeighborhoodLibrary {
         }
     }
 
+    // uses the checkIn() method defined in Book.java
     public static void checkInBook(){
         System.out.println("\nPlease write the ID of the book you'd like to check in: ");
         while (true) {
+            if (!myScanner.hasNextInt()) {
+                myScanner.nextLine(); // remove the bad input
+                System.out.println("Book ID not found.\n");
+                availableBooksMenu();
+                return;
+            }
+
             int returningBookID = myScanner.nextInt();
             for (Book book : libraryBooks){
                 if (book.getIsCheckedOut() && returningBookID == book.getId()){
@@ -170,7 +193,7 @@ public class NeighborhoodLibrary {
 
                     book.checkIn();
                     homeScreen();
-                    break;
+                    return;
                 }
             }
 

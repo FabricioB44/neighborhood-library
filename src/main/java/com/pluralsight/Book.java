@@ -47,4 +47,27 @@ public class Book {
         this.isCheckedOut = false;
 
     }
+
+
+    // the individual setters don't get used in this code but I figured I'd declare them just in case since the project description asks for it.
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setIsCheckedOut(boolean isCheckedOut) {
+        this.isCheckedOut = isCheckedOut;
+    }
+
+    public void setCheckedOutTo(String checkedOutTo) {
+        this.checkedOutTo = checkedOutTo;
+    }
 }

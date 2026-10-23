@@ -38,11 +38,11 @@ public class Book {
     public void checkedOut(String name) {
         this.isCheckedOut = true;
         this.checkedOutTo = name;
-        System.out.printf("\nBook #%d, %s, has been checked out by %s", this.id, this.title, name);
+        System.out.printf("\nBook #%d, %s, has been checked out by %s\n", this.id, this.title, name);
     }
 
     public void checkIn() {
-        System.out.printf("\nBook #%d, %s, has been checked back in by %s", this.id, this.title, this.checkedOutTo);
+        System.out.printf("\nBook #%d, %s, has been checked back in by %s\n", this.id, this.title, this.checkedOutTo);
         this.checkedOutTo = "";
         this.isCheckedOut = false;
 

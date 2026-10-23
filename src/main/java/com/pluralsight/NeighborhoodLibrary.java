@@ -33,7 +33,7 @@ public class NeighborhoodLibrary {
     public static void main(String[] args) {
 
 
-        System.out.println("Welcome to the neighborhood library! Please select what you'd like to do: ");
+        System.out.println("Welcome to the neighborhood library!\n");
         homeScreen();
         
         //libraryBooks[3].checkedOut("Fab");
@@ -41,18 +41,20 @@ public class NeighborhoodLibrary {
     }
 
     public static void homeScreen(){
+        System.out.println("What would you like to do?");
         System.out.println("1: Show available books");
         System.out.println("2: Show checked out books");
         System.out.println("3: Exit library");
-        switch (myScanner.nextInt()) {
-            case 1:
+        switch (myScanner.nextLine()) {
+            case "1":
                 showAvailableBooks();
                 break;
-            case 2:
+            case "2":
                 System.out.println("Not done yet");
                 break;
-            case 3:
-                System.out.println("Not done yet");
+            case "3":
+                System.out.println("Thank you for visiting the Neighborhood Library. Goodbye!");
+                System.exit(0);
                 break;
             default:
                 System.out.println("Invalid input, please try again: ");
@@ -72,23 +74,29 @@ public class NeighborhoodLibrary {
                 System.out.println();
             }
         }
-        System.out.println("What would you like to do: ");
+        availableBooksMenu();
+    }
+
+    public static void availableBooksMenu() {
+        System.out.println("What would you like to do?");
         System.out.println("1: Check out a book.");
         System.out.println("2: Go back to home screen.");
         System.out.println("3: Exit library.");
 
-        switch (myScanner.nextInt()) {
-            case 1:
+        switch (myScanner.nextLine()) {
+            case "1":
                 checkOutBook();
                 break;
-            case 2:
+            case "2":
                 homeScreen();
                 break;
-            case 3:
-                System.out.println("Not done yet");
+            case "3":
+                System.out.println("Thank you for visiting the Neighborhood Library. Goodbye!");
+                System.exit(0);
                 break;
             default:
-                System.out.println("Not done yet");
+                System.out.println("Invalid input, please try again.");
+                availableBooksMenu();
                 break;
         }
     }
@@ -97,23 +105,22 @@ public class NeighborhoodLibrary {
         System.out.println("\nPlease write the ID of the book you'd like to check out: ");
         while (true) {
             int wantedBookID = myScanner.nextInt();
-            boolean found = false;
             for (Book book : libraryBooks){
                 if (!book.getIsCheckedOut() && wantedBookID == book.getId()){
                     myScanner.nextLine();
-                    System.out.println("Please write your name: ");
+                    System.out.println("\nPlease write your name: ");
 
                     String userName = myScanner.nextLine();
                     book.checkedOut(userName);
-                    found = true;
+                    System.out.println();
+                    homeScreen();
                     break;
                 }
             }
-            if (found) {
-                break;
-            }
 
-            System.out.println("Book ID not found. Please try again: ");
+            System.out.println("Book ID not found. \n");
+            myScanner.nextLine();
+            availableBooksMenu();
         }
     }
 }

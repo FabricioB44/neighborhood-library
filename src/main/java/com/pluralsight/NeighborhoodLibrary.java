@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 
 public class NeighborhoodLibrary {
+    private static final Scanner myScanner = new Scanner(System.in);
+
     static Book[] libraryBooks = {
             new Book(1325, "978-0141036144", "1984", true, ""),
             new Book(2048, "978-0061120084", "To Kill a Mockingbird", false, ""),
@@ -39,10 +41,9 @@ public class NeighborhoodLibrary {
     }
 
     public static void homeScreen(){
-        Scanner myScanner = new Scanner(System.in);
         System.out.println("1: Show available books");
         System.out.println("2: Show checked out books");
-        System.out.println("3: Exit");
+        System.out.println("3: Exit library");
         switch (myScanner.nextInt()) {
             case 1:
                 showAvailableBooks();
@@ -62,10 +63,57 @@ public class NeighborhoodLibrary {
 
 
     public static void showAvailableBooks(){
+        System.out.println("\nBooks available for check out: \n");
         for (Book book : libraryBooks) {
             if (!book.getIsCheckedOut()) {
-                System.out.println(book);
+                System.out.println("ID: " + book.getId());
+                System.out.println("Title: " + book.getTitle());
+                System.out.println("ISBN: " + book.getIsbn());
+                System.out.println();
             }
+        }
+        System.out.println("What would you like to do: ");
+        System.out.println("1: Check out a book.");
+        System.out.println("2: Go back to home screen.");
+        System.out.println("3: Exit library.");
+
+        switch (myScanner.nextInt()) {
+            case 1:
+                checkOutBook();
+                break;
+            case 2:
+                homeScreen();
+                break;
+            case 3:
+                System.out.println("Not done yet");
+                break;
+            default:
+                System.out.println("Not done yet");
+                break;
+        }
+    }
+
+    public static void checkOutBook(){
+        System.out.println("\nPlease write the ID of the book you'd like to check out: ");
+        while (true) {
+            int wantedBookID = myScanner.nextInt();
+            boolean found = false;
+            for (Book book : libraryBooks){
+                if (!book.getIsCheckedOut() && wantedBookID == book.getId()){
+                    myScanner.nextLine();
+                    System.out.println("Please write your name: ");
+
+                    String userName = myScanner.nextLine();
+                    book.checkedOut(userName);
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                break;
+            }
+
+            System.out.println("Book ID not found. Please try again: ");
         }
     }
 }

@@ -24,5 +24,8 @@ public class NeighborhoodLibrary {
                 new Book(1173, "978-1451673319", "Fahrenheit 451", false, ""),
                 new Book(2268, "978-1594633669", "The Kite Runner", false, "")
         };
+        
+        libraryBooks[3].checkedOut("Fab");
+        libraryBooks[3].checkIn();
     }
 }
